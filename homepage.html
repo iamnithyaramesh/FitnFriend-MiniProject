@@ -2,26 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title</title>
+    <title>Fitness Avatar Selection</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3756/3756540.png" />
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/854/854878.png" />
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
 
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
       body {
         margin: 0;
         font-family: 'Quicksand', sans-serif;
         overflow: hidden;
+      }
+
+      h2 {
+        font-family: 'Pacifico', cursive;
+        font-size: 60px;
+        color: #651f09;
       }
 
       .overlay {
@@ -33,7 +32,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #dff6ff, #aee3f9);
+        background: linear-gradient(135deg, #fefcea, #f1da36);
         z-index: 2;
         flex-direction: column;
         animation: fadeIn 1.5s ease-in-out;
@@ -61,7 +60,7 @@
         text-align: center;
         animation: popIn 1.2s ease;
         width: 90%;
-        max-width: 400px;
+        max-width: 420px;
       }
 
       @keyframes popIn {
@@ -78,51 +77,25 @@
       .form-box h1 {
         font-family: 'Pacifico', cursive;
         font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: #009688;
-      }
-
-      .form-box label {
-        display: block;
-        margin-top: 1rem;
-        font-weight: 600;
-        color: #333;
-      }
-
-      .form-box input,
-      .form-box button {
-        width: 100%;
-        padding: 0.75rem;
-        margin-top: 0.5rem;
-        font-size: 1rem;
-        border-radius: 12px;
-        border: 1px solid #ccc;
-      }
-
-      .form-box button {
-        background-color: #009688;
-        color: white;
-        border: none;
-        transition: 0.3s;
-        margin-top: 1.5rem;
-        font-weight: bold;
-        letter-spacing: 0.5px;
-      }
-
-      .form-box button:hover {
-        background-color: #00796b;
+        margin-bottom: 1.5rem;
+        color: #ff5722;
       }
 
       .avatar-preview {
-        margin-top: 1rem;
         display: flex;
         justify-content: space-around;
         align-items: center;
+        width: 100%;
+        margin-top: 2rem;
+      }
+
+      .avatar-item {
+        text-align: center;
       }
 
       .avatar-preview img {
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         object-fit: contain;
         cursor: pointer;
         border: 3px solid transparent;
@@ -135,7 +108,7 @@
       }
 
       .avatar-selected {
-        border-color: #009688 !important;
+        border-color: #ff5722 !important;
       }
 
       @keyframes fadeIn {
@@ -152,103 +125,32 @@
   <body>
     <!-- UI Overlay Form -->
     <div class="overlay" id="home-form">
+      <h2>Fit-n-Friend</h2>
       <div class="form-box">
-        <h1>Welcome to MindSpace 🌿</h1>
-
-        <label for="username">Your Name</label>
-        <input type="text" id="username" placeholder="e.g. Aria" required />
-
-        <label>Choose Your Avatar</label>
+        <h1>Choose Your Fitness Avatar</h1>
         <div class="avatar-preview">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/706/706830.png"
-            alt="Male"
-            id="male-avatar"
-            onclick="selectAvatar('male')"
-          />
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/706/706814.png"
-            alt="Female"
-            id="female-avatar"
-            onclick="selectAvatar('female')"
-          />
+          <div class="avatar-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/4333/4333609.png" alt="Loki" id="loki-avatar" onclick="selectAvatar('loki')" />
+            <h3>Loki</h3>
+          </div>
+          <div class="avatar-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/706/706797.png" alt="Nithu" id="nithu-avatar" onclick="selectAvatar('nithu')" />
+            <h3>Nithu</h3>
+          </div>
+          <div class="avatar-item">
+            <img src="https://cdn-icons-png.flaticon.com/512/706/706807.png" alt="Nandy" id="nandy-avatar" onclick="selectAvatar('nandy')" />
+            <h3>Nandy</h3>
+          </div>
         </div>
-
-        <button onclick="enterVR()">Enter MindSpace</button>
       </div>
     </div>
 
-    <!-- VR Scene -->
-    <a-scene>
-      <a-assets>
-        <!-- Assets for the avatar -->
-        <a-asset-item id="meditator" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/model.glb"></a-asset-item>
-
-        <audio id="ambient-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
-
-        <!-- Background image -->
-        <img id="bg-image" src="background2.jpeg" />
-      </a-assets>
-
-      <!-- Female Avatar -->
-      <a-entity id="avatar" gltf-model="#meditator" position="0 0 -2.5" rotation="0 -18 0" scale="1.2 1.2 1.2"></a-entity>
-
-      <!-- 360° Background Sky Image -->
-      <a-sky src="background2.jpeg"></a-sky>
-
-      <!-- Ground -->
-      <a-plane position="0 0 -3" rotation="-90 0 0" width="50" height="50" color="#B0E0E6" opacity="0.7"></a-plane>
-
-      <!-- Floating particles -->
-      <a-entity particle-system="preset: dust; particleCount: 5000; color: #ffffff; size: 0.1; opacity: 0.5; speed: 0.5;" position="0 3 -2"></a-entity>
-
-      <!-- Background sound -->
-      <a-sound src="#ambient-sound" position="0 2 -2" autoplay="true" loop="true" volume="0.4"></a-sound>
-
-      <!-- Camera -->
-      <a-camera position="0 1.6 0"></a-camera>
-    </a-scene>
-
     <script>
-      let selectedAvatar = "";
-
-      function selectAvatar(gender) {
-        selectedAvatar = gender;
-        document.getElementById("male-avatar").classList.remove("avatar-selected");
-        document.getElementById("female-avatar").classList.remove("avatar-selected");
-
-        document.getElementById(gender + "-avatar").classList.add("avatar-selected");
+      // Function to handle avatar selection and redirect to index.html with avatar info
+      function selectAvatar(avatarName) {
+        localStorage.setItem("selectedAvatar", avatarName); // Store selected avatar in localStorage
+        window.location.href = "index.html"; // Redirect to the VR scene page
       }
-
-      function enterVR() {
-        const username = document.getElementById("username").value.trim();
-        if (!username || !selectedAvatar) {
-          alert("Please enter your name and choose an avatar.");
-          return;
-        }
-
-        // Save to localStorage
-        localStorage.setItem("mindspace_username", username);
-        localStorage.setItem("mindspace_avatar", selectedAvatar);
-
-        // Redirect to VR scene
-        window.location.href = "index.html";
-      }
-
-      // Load avatar and background in VR scene based on choice
-      window.addEventListener("load", () => {
-        const avatar = localStorage.getItem("mindspace_avatar");
-        const avatarEntity = document.getElementById("avatar");
-        
-        if (avatar === "male") {
-          avatarEntity.setAttribute("gltf-model", "#meditator-male");
-        } else {
-          avatarEntity.setAttribute("gltf-model", "#meditator");
-        }
-
-        const username = localStorage.getItem("mindspace_username");
-        console.log("Welcome", username, "| Avatar:", avatar);
-      });
     </script>
   </body>
 </html>
