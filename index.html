@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Breathing Meditation</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Camera with cursor (optional) -->
+      <a-entity camera look-controls position="0 1.6 0">
+        <a-cursor></a-cursor>
+      </a-entity>
+
+      <!-- Sky / Background -->
+      <a-sky color="#B0E0E6"></a-sky>
+
+      <!-- Breathing Sphere -->
+      <a-sphere 
+        id="breathSphere"
+        position="0 1.6 -3"
+        radius="1"
+        color="#6A5ACD"
+        animation="property: scale; dir: alternate; dur: 4000; easing: easeInOutSine; loop: true; to: 1.5 1.5 1.5">
+      </a-sphere>
+
+      <!-- Text Instruction -->
+      <a-text 
+        value="Breathe in... Breathe out..." 
+        align="center" 
+        position="0 2.5 -3"
+        color="#fff"
+        width="4">
+      </a-text>
+
+      <!-- Optional sound -->
+      <a-sound src="https://cdn.glitch.global/your-relaxing-music.mp3" autoplay="true" loop="true"></a-sound>
+    </a-scene>
+  </body>
+</html>
