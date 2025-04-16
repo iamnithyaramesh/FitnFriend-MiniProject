@@ -2,58 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Meditation VR</title>
+    <title>Test Avatar Load</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+
   </head>
   <body>
-    <a-scene>
-      <!-- Assets for the avatars -->
+    <a-scene background="color: #ECECEC">
+      <!-- Assets -->
       <a-assets>
-        <!-- Placeholder models for each avatar -->
-        <a-asset-item id="loki-avatar" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/meditation_pose_male.glb"></a-asset-item>
-        <a-asset-item id="nithu-avatar" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/nithu.glb"></a-asset-item>
-        <a-asset-item id="nandy-avatar" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/meditation_pose_female.glb"></a-asset-item>
-
-        <!-- Ambient sound -->
-        <audio id="ambient-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
-
-        <!-- Background image -->
-        <img id="bg-image" src="background2.jpeg" />
+        <a-asset-item id="avatarModel" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/nithu.glb"></a-asset-item>
       </a-assets>
 
-      <!-- Default avatar (female) -->
-      <a-entity id="avatar" gltf-model="#nithu-avatar" position="0 0 -2.5" rotation="0 -18 0" scale="1.2 1.2 1.2"
-        animation="property: scale; to: 1.2 1.4 1.2; dir: alternate; dur: 2000; loop: true;">
-      </a-entity>
-
-      <!-- 360° Background Sky Image -->
-      <a-sky src="#bg-image"></a-sky>
-
-      <!-- Gentle ground to sit on -->
-      <a-plane position="0 0 -3" rotation="-90 0 0" width="50" height="50" color="#B0E0E6" opacity="0.7"></a-plane>
-
-      <!-- Floating particles for a serene atmosphere -->
-      <a-entity particle-system="preset: dust; particleCount: 5000; color: #ffffff; size: 0.1; opacity: 0.5; speed: 0.5;" position="0 3 -2">
-      </a-entity>
-
-      <!-- Calm background sound -->
-      <a-sound src="#ambient-sound" position="0 2 -2" autoplay="true" loop="true" volume="0.4"></a-sound>
+      <!-- Avatar -->
+      <a-entity gltf-model="#avatarModel" position="0 -1 -4" scale="2 2 2" rotation="0 -25 0"></a-entity>
 
       <!-- Camera -->
       <a-camera position="0 1.6 0"></a-camera>
+
+      <!-- Light -->
+      <a-entity light="type: ambient; color: #ffffff; intensity: 1"></a-entity>
+      <a-entity light="type: directional; intensity: 0.6" position="0 1 1"></a-entity>
     </a-scene>
-
-    <script>
-      // Fetch selected avatar from localStorage and update the avatar model in the VR scene
-      window.onload = function () {
-        const selectedAvatar = localStorage.getItem("selectedAvatar");
-
-        // Update avatar model based on selection
-        if (selectedAvatar) {
-          const avatarModel = document.getElementById("avatar");
-          avatarModel.setAttribute("gltf-model", `#${selectedAvatar}-avatar`);
-        }
-      }
-    </script>
   </body>
 </html>
