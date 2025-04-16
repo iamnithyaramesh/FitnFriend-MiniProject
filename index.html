@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Breathing Meditation</title>
+    <meta charset="utf-8">
+    <title>Meditation VR</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
   <body>
     <a-scene>
-      <!-- Camera with cursor (optional) -->
-      <a-entity camera look-controls position="0 1.6 0">
-        <a-cursor></a-cursor>
+      <!-- Assets for the avatar -->
+      <a-assets>
+        <a-asset-item id="meditator" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/meditation_pose_female.glb"></a-asset-item>
+        <audio id="ambient-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+        <!-- Background image -->
+        <img id="bg-image" src="background2.jpeg" />
+        <!-- Replace above URL with your own background image if needed -->
+      </a-assets>
+
+      <!-- Female Avatar -->
+      <a-entity 
+        gltf-model="#meditator" 
+        position="0 0 -2.5" 
+        rotation="0 -18 0" 
+        scale="1.2 1.2 1.2"
+        animation="property: scale; to: 1.2 1.4 1.2; dir: alternate; dur: 2000; loop: true;">
       </a-entity>
 
-      <!-- Sky / Background -->
-      <a-sky color="#B0E0E6"></a-sky>
+      <!-- 360° Background Sky Image -->
+      <a-sky src="#bg-image"></a-sky>
 
-      <!-- Breathing Sphere -->
-      <a-sphere 
-        id="breathSphere"
-        position="0 1.6 -3"
-        radius="1"
-        color="#6A5ACD"
-        animation="property: scale; dir: alternate; dur: 4000; easing: easeInOutSine; loop: true; to: 1.5 1.5 1.5">
-      </a-sphere>
+      <!-- Gentle ground to sit on -->
+      <a-plane position="0 0 -3" rotation="-90 0 0" width="50" height="50" color="#B0E0E6" opacity="0.7"></a-plane>
 
-      <!-- Text Instruction -->
-      <a-text 
-        value="Breathe in... Breathe out..." 
-        align="center" 
-        position="0 2.5 -3"
-        color="#fff"
-        width="4">
-      </a-text>
+      <!-- Floating particles for a serene atmosphere -->
+      <a-entity 
+        particle-system="preset: dust; particleCount: 5000; color: #ffffff; size: 0.1; opacity: 0.5; speed: 0.5;" 
+        position="0 3 -2">
+      </a-entity>
 
-      <!-- Optional sound -->
-      <a-sound src="https://cdn.glitch.global/your-relaxing-music.mp3" autoplay="true" loop="true"></a-sound>
+      <!-- Calm background sound -->
+      <a-sound 
+        src="#ambient-sound" 
+        position="0 2 -2" 
+        autoplay="true" 
+        loop="true" 
+        volume="0.4">
+      </a-sound>
+
+      <!-- Camera -->
+      <a-camera position="0 1.6 0"></a-camera>
     </a-scene>
   </body>
 </html>
