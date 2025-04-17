@@ -146,10 +146,21 @@
     </div>
 
     <script>
-      // Function to handle avatar selection and redirect to index.html with avatar info
       function selectAvatar(avatarName) {
-        localStorage.setItem("selectedAvatar", avatarName); // Store selected avatar in localStorage
-        window.location.href = "index.html"; // Redirect to the VR scene page
+        localStorage.setItem("selectedAvatar", avatarName);
+        switch (avatarName) {
+          case "loki":
+            window.location.href = "loki.html";
+            break;
+          case "nithu":
+            window.location.href = "nithu.html";
+            break;
+          case "nandy":
+            window.location.href = "nandy.html";
+            break;
+          default:
+            window.location.href = "loki.html";
+        }
       }
     </script>
   </body>
