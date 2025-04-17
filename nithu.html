@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>VR Push-up Room with Gym Image</title>
+    <title>Ten Minute On-Spot Running</title>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   </head>
@@ -11,7 +11,6 @@
       <a-assets>
         <a-asset-item id="avatarModel" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/nithu.glb"></a-asset-item>
         <audio id="bgMusic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4be6f28791.mp3" preload="auto"></audio>
-        <audio id="repSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_11fc74c9a0.mp3" preload="auto"></audio>
         <img id="woodTexture" src="floor.jpeg">
       </a-assets>
 
@@ -19,7 +18,7 @@
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="10" color="#808080"></a-plane>
 
       <!-- Ceiling -->
-      <a-plane position="0 10 0" rotation="90 0 0" width="30" height="10" color="#808080"></a-plane>
+      <a-plane position="0 10 0" rotation="90 0 0" width="30" height="10" color="#fffffd"></a-plane>
 
       <!-- Left Wall -->
       <a-plane position="-10 5 0" rotation="0 90 0" width="30" height="10" color="#F4C2C2"></a-plane>
@@ -27,35 +26,30 @@
       <!-- Right Wall -->
       <a-plane position="10 5 0" rotation="0 -90 0" width="30" height="10" color="#F4C2C2"></a-plane>
 
-      <!-- Back Wall (gym image) -->
+      <!-- Back Wall -->
       <a-plane position="0 5 -5" rotation="0 0 0" width="30" height="10"  color="#F4C2C2"></a-plane>
 
-
       <!-- Yoga Mat -->
-      <!-- Yoga Mat -->
-<a-box position="0 0.05 -2.5" width="8" height="0.05" depth="0.9" color="#f1da36"></a-box>
+      <a-box position="0 0.05 -2.5" width="8" height="0.05" depth="0.9" color="#89CFF0"></a-box>
 
-
+      <!-- Trainer Avatar -->
       <a-entity id="trainer"
-      gltf-model="#avatarModel"
-      position="0 0 -2.5"
-      scale="3 3 3"
-      rotation="0 -90 0"
-      animation-mixer="clip: mixamo.com; loop: repeat;">
-</a-entity>
+        gltf-model="#avatarModel"
+        position="0 0 -2.5"
+        scale="3 3 3"
+        rotation="0 -90 0"
+        animation-mixer="clip: mixamo.com; loop: repeat;">
+      </a-entity>
 
-
-      <!-- Pushup Counter -->
+      <!-- Timer Text -->
       <a-text
-        id="counterText"
-        value="Pushups: 0"
+        id="timerText"
+        value="Time Left: 10:00"
         position="0 3 4"
         align="center"
-        width="5"
+        width="6"
         color="black"
-        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
-        background-color="white"
-        border-radius="2">
+        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt">
       </a-text>
 
       <!-- Camera -->
@@ -65,33 +59,33 @@
       <a-entity light="type: ambient; color: #ffffff; intensity: 1"></a-entity>
       <a-entity light="type: directional; intensity: 0.6" position="0 10 5"></a-entity>
 
-      <!-- Sounds -->
+      <!-- Background Music -->
       <a-entity id="bgm" sound="src: #bgMusic; autoplay: true; loop: true; volume: 0.4"></a-entity>
-      <a-entity id="rep" sound="src: #repSound; volume: 1"></a-entity>
-
-  
 
       <!-- Script -->
       <script>
-        let pushupCount = 0;
-        const maxPushups = 30;
+        const timerText = document.querySelector('#timerText');
+        let totalSeconds = 600; // 10 minutes
 
-        const trainer = document.querySelector('#trainer');
-        const counterText = document.querySelector('#counterText');
-        const repSound = document.querySelector('#rep');
+        function updateTimerDisplay() {
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = totalSeconds % 60;
+          timerText.setAttribute('value', `Time Left: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+        }
 
-        trainer.addEventListener('animation-loop', () => {
-          pushupCount++;
-          counterText.setAttribute('value', `Pushups: ${pushupCount}`);
-          repSound.components.sound.playSound();
+        updateTimerDisplay();
+        const countdownInterval = setInterval(() => {
+          totalSeconds--;
 
+          if (totalSeconds <= 0) {
+            clearInterval(countdownInterval);
+            timerText.setAttribute('value', "✅ Time's Up! Great Job!");
+            alert("10 Minutes Completed! 🎉");
+            return;
+          }
 
-          if (pushupCount >= maxPushups) {
-      trainer.removeAttribute('animation-mixer');
-      counterText.setAttribute('value', `Pushups: ${pushupCount} ✅ Done!`);
-      alert("Congrats! 30 pushups completed 🎉");
-    }
-        });
+          updateTimerDisplay();
+        }, 1000);
       </script>
     </a-scene>
   </body>
