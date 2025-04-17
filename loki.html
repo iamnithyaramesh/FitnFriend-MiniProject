@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>VR Push-up Room with Gym Image</title>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <a-asset-item id="avatarModel" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/loki.glb"></a-asset-item>
+        <audio id="bgMusic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4be6f28791.mp3" preload="auto"></audio>
+        <audio id="repSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_11fc74c9a0.mp3" preload="auto"></audio>
+        <img id="woodTexture" src="floor.jpeg">
+      </a-assets>
+
+      <!-- Floor -->
+      <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="10" color="#808080"></a-plane>
+
+      <!-- Ceiling -->
+      <a-plane position="0 10 0" rotation="90 0 0" width="30" height="10" color="#808080"></a-plane>
+
+      <!-- Left Wall -->
+      <a-plane position="-10 5 0" rotation="0 90 0" width="30" height="10" color="#F5F5DC"></a-plane>
+
+      <!-- Right Wall -->
+      <a-plane position="10 5 0" rotation="0 -90 0" width="30" height="10" color="#F5F5DC"></a-plane>
+
+      <!-- Back Wall (gym image) -->
+      <a-plane position="0 5 -5" rotation="0 0 0" width="30" height="10"  color="#F5F5DC"></a-plane>
+
+
+      <!-- Yoga Mat -->
+      <!-- Yoga Mat -->
+<a-box position="0 0.05 -2.5" width="8" height="0.05" depth="0.9" color="#f1da36"></a-box>
+
+
+      <a-entity id="trainer"
+      gltf-model="#avatarModel"
+      position="0 0 -2.5"
+      scale="3 3 3"
+      rotation="0 -90 0"
+      animation-mixer="clip: mixamo.com; loop: repeat;">
+</a-entity>
+
+
+      <!-- Pushup Counter -->
+      <a-text
+        id="counterText"
+        value="Pushups: 0"
+        position="0 3 4"
+        align="center"
+        width="5"
+        color="black"
+        font="https://cdn.aframe.io/fonts/Exo2Bold.fnt"
+        background-color="white"
+        border-radius="2">
+      </a-text>
+
+      <!-- Camera -->
+      <a-camera position="0 1.6 6"></a-camera>
+
+      <!-- Lights -->
+      <a-entity light="type: ambient; color: #ffffff; intensity: 1"></a-entity>
+      <a-entity light="type: directional; intensity: 0.6" position="0 10 5"></a-entity>
+
+      <!-- Sounds -->
+      <a-entity id="bgm" sound="src: #bgMusic; autoplay: true; loop: true; volume: 0.4"></a-entity>
+      <a-entity id="rep" sound="src: #repSound; volume: 1"></a-entity>
+
+  
+
+      <!-- Script -->
+      <script>
+        let pushupCount = 0;
+        const maxPushups = 30;
+
+        const trainer = document.querySelector('#trainer');
+        const counterText = document.querySelector('#counterText');
+        const repSound = document.querySelector('#rep');
+
+        trainer.addEventListener('animation-loop', () => {
+          pushupCount++;
+          counterText.setAttribute('value', `Pushups: ${pushupCount}`);
+          repSound.components.sound.playSound();
+
+
+          if (pushupCount >= maxPushups) {
+      trainer.removeAttribute('animation-mixer');
+      counterText.setAttribute('value', `Pushups: ${pushupCount} ✅ Done!`);
+      alert("Congrats! 30 pushups completed 🎉");
+    }
+        });
+      </script>
+    </a-scene>
+  </body>
+</html>

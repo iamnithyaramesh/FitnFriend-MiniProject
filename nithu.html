@@ -9,7 +9,7 @@
   <body>
     <a-scene>
       <a-assets>
-        <a-asset-item id="avatarModel" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/loki.glb"></a-asset-item>
+        <a-asset-item id="avatarModel" src="https://raw.githubusercontent.com/iamnithyaramesh/ARVR/main/nithu.glb"></a-asset-item>
         <audio id="bgMusic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_4be6f28791.mp3" preload="auto"></audio>
         <audio id="repSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_11fc74c9a0.mp3" preload="auto"></audio>
         <img id="woodTexture" src="floor.jpeg">
@@ -19,35 +19,37 @@
       <a-plane position="0 0 0" rotation="-90 0 0" width="30" height="10" color="#808080"></a-plane>
 
       <!-- Ceiling -->
-      <a-plane position="0 5 0" rotation="90 0 0" width="30" height="10" color="#808080"></a-plane>
+      <a-plane position="0 10 0" rotation="90 0 0" width="30" height="10" color="#808080"></a-plane>
 
       <!-- Left Wall -->
-      <a-plane position="-10 5 0" rotation="0 90 0" width="30" height="10" color="#F5F5DC"></a-plane>
+      <a-plane position="-10 5 0" rotation="0 90 0" width="30" height="10" color="#F4C2C2"></a-plane>
 
       <!-- Right Wall -->
-      <a-plane position="10 5 0" rotation="0 -90 0" width="30" height="10" color="#F5F5DC"></a-plane>
+      <a-plane position="10 5 0" rotation="0 -90 0" width="30" height="10" color="#F4C2C2"></a-plane>
 
       <!-- Back Wall (gym image) -->
-      <a-plane position="0 5 -5" rotation="0 0 0" width="30" height="10"  color="#F5F5DC"></a-plane>
+      <a-plane position="0 5 -5" rotation="0 0 0" width="30" height="10"  color="#F4C2C2"></a-plane>
 
 
       <!-- Yoga Mat -->
-      <a-box position="0 0.05 -2.5" width="6" height="0.02" depth="0.9" color="#f1da36"></a-box>
+      <!-- Yoga Mat -->
+<a-box position="0 0.05 -2.5" width="8" height="0.05" depth="0.9" color="#f1da36"></a-box>
 
-      <!-- Pushup Trainer -->
+
       <a-entity id="trainer"
-                gltf-model="#avatarModel"
-                position="0 0 -2.5"
-                scale="3 3 3"
-                rotation="0 -90 0"
-                animation-mixer="clip: mixamo.com; loop: repeat;">
-      </a-entity>
+      gltf-model="#avatarModel"
+      position="0 0 -2.5"
+      scale="3 3 3"
+      rotation="0 -90 0"
+      animation-mixer="clip: mixamo.com; loop: repeat;">
+</a-entity>
+
 
       <!-- Pushup Counter -->
       <a-text
         id="counterText"
         value="Pushups: 0"
-        position="0 2.5 4"
+        position="0 3 4"
         align="center"
         width="5"
         color="black"
@@ -83,11 +85,12 @@
           counterText.setAttribute('value', `Pushups: ${pushupCount}`);
           repSound.components.sound.playSound();
 
+
           if (pushupCount >= maxPushups) {
-            trainer.removeAttribute('animation-mixer');
-            counterText.setAttribute('value', `Pushups: ${pushupCount} ✅ Done!`);
-            alert("Congrats! 30 pushups completed 🎉");
-          }
+      trainer.removeAttribute('animation-mixer');
+      counterText.setAttribute('value', `Pushups: ${pushupCount} ✅ Done!`);
+      alert("Congrats! 30 pushups completed 🎉");
+    }
         });
       </script>
     </a-scene>
